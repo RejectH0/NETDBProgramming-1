@@ -86,8 +86,7 @@ namespace SleepData
                                 {
                                     total += Int32.Parse(item);
                                 }
-                                decimal avg = 0;
-                                avg = total / arr2.Length;
+                                decimal avg = total / arr2.Length;
                                 string average = avg.ToString("f1");
                                 DateTime parsedDate = DateTime.Parse(arr[g]);
                                 Console.Write("Week of {0:d}\n", parsedDate.ToString("MMM dd, yyyy"));
@@ -95,18 +94,13 @@ namespace SleepData
                                 Console.Write(" {0} {0} {0} {0} {0} {0} {0} {1} {1}\n", "--", "---");
                                 Console.Write(" {0,2} {1,2} {2,2} {3,2} {4,2} {5,2} {6,2}", arr2);
                                 Console.Write(" {0,3} {1,3}\n\n",total,average);
-
                             }
                         }
                     }
                 }
-
-
                 Console.WriteLine("Press Enter to Continue: ");
                 Console.ReadKey(false);
                 System.Environment.Exit(0);
-
-
             }
         }
     }
