@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 
 namespace SleepData
 {
@@ -15,7 +16,8 @@ namespace SleepData
             string resp = Console.ReadLine();
 
             // specify path for data file
-            string file = "/users/jgrissom/downloads/data.txt";
+            //string file = "/users/jgrissom/downloads/data.txt";
+            string file = AppDomain.CurrentDomain.BaseDirectory + "data.txt";
 
             if (resp == "1")
             {
@@ -58,7 +60,52 @@ namespace SleepData
             }
             else if (resp == "2")
             {
-                // TODO: parse data file
+                if (!(File.Exists(file)))
+                {
+                    Console.WriteLine("File does not exist. Go create it first.");
+                    Console.WriteLine("Press Enter to Continue: ");
+                    Console.ReadKey(false);
+                    System.Environment.Exit(0);
+                }
+                else
+                {
+                    StreamReader sr = new StreamReader(file);
+                    while (!sr.EndOfStream)
+                    {
+                        string line = sr.ReadLine();
+                        string[] arr = line.Split(',');
+                        string[] arr2 = arr[1].Split('|');
+                        string[] daysOfWeek = new string[] { "Su", "Mo", "Tu", "We", "Th", "Fr", "Sa", "Tot", "Avg" };
+
+                        for (int g = 0; g < 1; g++)
+                        {
+                            if (!arr[0].All(char.IsWhiteSpace))
+                            {
+                                decimal total = 0;
+                                foreach (var item in arr2)
+                                {
+                                    total += Int32.Parse(item);
+                                }
+                                decimal avg = 0;
+                                avg = total / arr2.Length;
+                                string average = avg.ToString("f1");
+                                DateTime parsedDate = DateTime.Parse(arr[g]);
+                                Console.Write("Week of {0:d}\n", parsedDate.ToString("MMM dd, yyyy"));
+                                Console.Write(" {0} {1} {2} {3} {4} {5} {6} {7} {8}\n", daysOfWeek);
+                                Console.Write(" {0} {0} {0} {0} {0} {0} {0} {1} {1}\n", "--", "---");
+                                Console.Write(" {0,2} {1,2} {2,2} {3,2} {4,2} {5,2} {6,2}", arr2);
+                                Console.Write(" {0,3} {1,3}\n\n",total,average);
+
+                            }
+                        }
+                    }
+                }
+
+
+                Console.WriteLine("Press Enter to Continue: ");
+                Console.ReadKey(false);
+                System.Environment.Exit(0);
+
 
             }
         }
